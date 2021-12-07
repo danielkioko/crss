@@ -31,6 +31,7 @@ class CVCell: UICollectionViewCell {
 class ViewController: UIViewController {
     
     let cv_cellIdentifier = "CVCell"
+    @IBOutlet var collectionView: UICollectionView!
     
     let cv_courses:[Course] = [
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
@@ -42,6 +43,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
     }
 
 }
