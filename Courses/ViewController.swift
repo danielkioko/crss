@@ -28,24 +28,41 @@ class CVCell: UICollectionViewCell {
     
 }
 
+class TVCell: UITableViewCell {
+
+    @IBOutlet var tView: UIView!
+    @IBOutlet var tImage: UIImageView!
+    @IBOutlet var tTitle: UILabel!
+    @IBOutlet var tAuthor: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        tView.layer.cornerRadius = 12
+        tImage.layer.cornerRadius = 12
+        tView.layer.borderWidth = 1.5
+        tView.layer.borderColor = UIColor.systemGray.cgColor
+    }
+    
+}
+
 class ViewController: UIViewController {
     
     let cv_cellIdentifier = "CVCell"
+    let tv_cellIdentifier = "TVCell"
+    
     @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var tableView: UITableView!
     
     let cv_courses:[Course] = [
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
-        Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
+        Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck")
     ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
     }
 
 }
@@ -66,3 +83,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
 }
 
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.cv_courses.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: tv_cellIdentifier) as! TVCell
+        cell.tImage.image = UIImage(named: self.cv_courses[indexPath.row].image)
+        cell.tTitle.text = self.cv_courses[indexPath.row].title
+        cell.tAuthor.text = self.cv_courses[indexPath.row].author
+        return cell
+    }
+    
+    
+}
