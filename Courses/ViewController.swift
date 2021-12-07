@@ -37,6 +37,7 @@ class TVCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
         tView.layer.cornerRadius = 12
         tImage.layer.cornerRadius = 12
         tView.layer.borderWidth = 1.5
