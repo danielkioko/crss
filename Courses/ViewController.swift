@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 struct Course {
     var image: String
@@ -29,7 +31,7 @@ class CVCell: UICollectionViewCell {
 }
 
 class TVCell: UITableViewCell {
-
+    
     @IBOutlet var tView: UIView!
     @IBOutlet var tImage: UIImageView!
     @IBOutlet var tTitle: UILabel!
@@ -54,18 +56,67 @@ class ViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var tableView: UITableView!
     
-   /**
+    /**
+     
+     Create a function to upload to "courses" in FB
+     
+     - imageURL, title, author, content(nil/not mandatory)
+     
+     Temporary function & button, Hardcode data to upload to firebase
+     
+     Create the function to get the data & populate collectionView and tableView
+     
+     
+     
+     
+     */
+    
+    @IBAction func UploadButton(_ sender: UIButton) {
+        uploadToDB()
+    }
+    
+    
+    @IBAction func fetchData(_ sender: UIButton) {
+        let storageRef = Storage.storage().reference(withPath: "Images/8C3DCC28-0F34-4C6B-BD58-59AFB07D3510.jpg")
+        storageRef.getData(maxSize: 4 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("there's an error\(error.localizedDescription)")
+                return
+            }
+            if let data = data{
+                
+            }
+        }
+    }
+    
+    func uploadToDB() {
+        var ref:DatabaseReference = Database.database().reference()
+
+        let course:[String:Any] = [
+            "imgURL": "string here",
+            "title": "string here",
+            "author": "string here"
+        ]
         
-            Create a function to upload to "courses" in FB
+        let keyValue:String = ref.child("courses").childByAutoId().key!
+        
+        ref.child("courses").child(keyValue).setValue(course)
+        
+        let randomID = UUID.init().uuidString
+        let uploadRef = Storage.storage().reference(withPath: "Images/\(randomID).jpg")
+        let imageData = UIImage(named: "img1")!.jpegData(compressionQuality: 0.75)
+        let uploadMetadata = StorageMetadata.init()
+        uploadMetadata.contentType = "image/jpeg"
+
+        uploadRef.putData(imageData!, metadata: uploadMetadata) {(downloadMetadata, error) in
+            if let error = error{
+                print("error\(error.localizedDescription)")
+                return
+            }
+            print("Put is complete and i got this back: \(String(describing: downloadMetadata))")
+        }
+    }
     
-            - imageURL, title, author, content(nil/not mandatory)
-    
-            Temporary function & button, Hardcode data to upload to firebase
-    
-            Create the function to get the data & populate collectionView and tableView
-            
-    
-    */
     let cv_courses:[Course] = [
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
@@ -73,12 +124,13 @@ class ViewController: UIViewController {
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck"),
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck")
     ]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
 }
+
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
