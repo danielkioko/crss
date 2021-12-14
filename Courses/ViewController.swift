@@ -72,7 +72,7 @@ class ViewController: UIViewController {
      */
     
     @IBAction func UploadButton(_ sender: UIButton) {
-        uploadToDB()
+        uploadAsset()
     }
     
     
@@ -89,18 +89,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func uploadToDB() {
-        var ref:DatabaseReference = Database.database().reference()
-
-        let course:[String:Any] = [
-            "imgURL": "string here",
-            "title": "string here",
-            "author": "string here"
-        ]
-        
-        let keyValue:String = ref.child("courses").childByAutoId().key!
-        
-        ref.child("courses").child(keyValue).setValue(course)
+    /** UPLOAD ASSET FIRST */
+    func uploadAsset() {
         
         let randomID = UUID.init().uuidString
         let uploadRef = Storage.storage().reference(withPath: "Images/\(randomID).jpg")
@@ -113,8 +103,34 @@ class ViewController: UIViewController {
                 print("error\(error.localizedDescription)")
                 return
             }
-            print("Put is complete and i got this back: \(String(describing: downloadMetadata))")
+            uploadRef.downloadURL { url, error in
+                if let error = error{
+                    print("error\(error.localizedDescription)")
+                    return
+                }
+                if let urlText = url?.absoluteString {
+                    self.uploadToDB(url: urlText)
+                    print("Put is complete and i got this URL string back: \(urlText)")
+                }
+            }
         }
+        
+    }
+    
+    /** UPLOAD AFTER UPLOADING ASSET */
+    func uploadToDB(url: String) {
+        let ref:DatabaseReference = Database.database().reference()
+
+        let course:[String:Any] = [
+            "imgURL": url,
+            "title": "string here",
+            "author": "string here"
+        ]
+        
+        let keyValue:String = ref.child("courses").childByAutoId().key!
+        
+        ref.child("courses").child(keyValue).setValue(course)
+    
     }
     
     let cv_courses:[Course] = [
