@@ -53,6 +53,8 @@ class ViewController: UIViewController {
     let cv_cellIdentifier = "CVCell"
     let tv_cellIdentifier = "TVCell"
     
+    var courses = Array<[String:String]>()
+    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var tableView: UITableView!
     
@@ -66,10 +68,21 @@ class ViewController: UIViewController {
      
      Create the function to get the data & populate collectionView and tableView
      
-     
-     
-     
      */
+    
+    func grabInfo() {
+        let ref:DatabaseReference = Database.database().reference()
+        
+        ref.child("courses").getData { err, snapshot in
+            
+            if let dictionary = snapshot.value as? NSDictionary {
+                let array = dictionary.allValues as? [[String:String]]
+                self.courses = array!
+                print(self.courses)
+            }
+            
+        }
+    }
     
     @IBAction func UploadButton(_ sender: UIButton) {
         uploadAsset()
@@ -77,16 +90,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func fetchData(_ sender: UIButton) {
-        let storageRef = Storage.storage().reference(withPath: "Images/8C3DCC28-0F34-4C6B-BD58-59AFB07D3510.jpg")
-        storageRef.getData(maxSize: 4 * 1024 * 1024) { data, error in
-            if let error = error {
-                print("there's an error\(error.localizedDescription)")
-                return
-            }
-            if let data = data{
-                
-            }
-        }
+        grabInfo()
     }
     
     /** UPLOAD ASSET FIRST */
