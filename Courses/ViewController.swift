@@ -58,18 +58,6 @@ class ViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var tableView: UITableView!
     
-    /**
-     
-     Create a function to upload to "courses" in FB
-     
-     - imageURL, title, author, content(nil/not mandatory)
-     
-     Temporary function & button, Hardcode data to upload to firebase
-     
-     Create the function to get the data & populate collectionView and tableView
-     
-     */
-    
     func grabInfo() {
         let ref:DatabaseReference = Database.database().reference()
         
@@ -84,14 +72,14 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func UploadButton(_ sender: UIButton) {
-        uploadAsset()
-    }
+   // @IBAction func UploadButton(_ sender: UIButton) {
+   //     uploadAsset()
+   // }
     
     
-    @IBAction func fetchData(_ sender: UIButton) {
-        grabInfo()
-    }
+   // @IBAction func fetchData(_ sender: UIButton) {
+    //    grabInfo()
+   // }
     
     /** UPLOAD ASSET FIRST */
     func uploadAsset() {
@@ -145,8 +133,12 @@ class ViewController: UIViewController {
         Course(image: "img1", title: "Gliding 101", author: "Laurent Reiffsteck")
     ]
     
+    @IBOutlet weak var greySeparator: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        greySeparator.layer.cornerRadius = 2
+        self.tableView.separatorStyle = .none
     }
     
 }
