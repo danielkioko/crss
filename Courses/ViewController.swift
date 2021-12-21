@@ -21,11 +21,17 @@ class CVCell: UICollectionViewCell {
     @IBOutlet var cImage: UIImageView!
     @IBOutlet var cTitle: UILabel!
     @IBOutlet var cAuthor: UILabel!
+    @IBOutlet weak var highLighter: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         cView.layer.cornerRadius = 12
         cImage.layer.cornerRadius = 12
+        
+        //Title, author highlighter within the collectionView with rounded corner only for bottom's
+        highLighter.clipsToBounds = true
+        highLighter.layer.cornerRadius = 12
+        highLighter.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
     
 }
@@ -72,16 +78,7 @@ class ViewController: UIViewController {
         }
     }
     
-   // @IBAction func UploadButton(_ sender: UIButton) {
-   //     uploadAsset()
-   // }
-    
-    
-   // @IBAction func fetchData(_ sender: UIButton) {
-    //    grabInfo()
-   // }
-    
-    /** UPLOAD ASSET FIRST */
+    //MARK: -  UPLOAD ASSET FIRST
     func uploadAsset() {
         
         let randomID = UUID.init().uuidString
@@ -109,7 +106,7 @@ class ViewController: UIViewController {
         
     }
     
-    /** UPLOAD AFTER UPLOADING ASSET */
+    //MARK: -  UPLOAD AFTER UPLOADING ASSET
     func uploadToDB(url: String) {
         let ref:DatabaseReference = Database.database().reference()
 

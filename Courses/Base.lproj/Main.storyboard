@@ -49,6 +49,11 @@
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IYF-Yq-X9B">
                                                                         <rect key="frame" x="0.0" y="0.0" width="251" height="203"/>
                                                                     </imageView>
+                                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzq-OZ-8pE">
+                                                                        <rect key="frame" x="0.0" y="141" width="251" height="62"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <color key="backgroundColor" red="0.058447721324016128" green="0.058080125592418548" blue="0.058815317055613714" alpha="0.50110444568452384" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSM-84-KU3">
                                                                         <rect key="frame" x="8" y="174" width="42" height="21"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -90,6 +95,7 @@
                                                         <outlet property="cImage" destination="IYF-Yq-X9B" id="Utw-cq-c47"/>
                                                         <outlet property="cTitle" destination="Maj-6L-PN3" id="7Dw-9k-DHG"/>
                                                         <outlet property="cView" destination="QeO-EC-qg1" id="ChY-w6-6F2"/>
+                                                        <outlet property="highLighter" destination="dzq-OZ-8pE" id="jVu-nV-GEe"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
